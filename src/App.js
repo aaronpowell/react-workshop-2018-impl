@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { fetchAgenda } from './agenda';
+import AgendaDay from './AgendaDay';
 
 class App extends Component {
   constructor() {
@@ -28,50 +29,11 @@ class App extends Component {
         friday: talks.filter(t => t.day === "friday")
       };
 
-      const wednesdayElement = (
-        <div>
-          <h2>Wednesday</h2>
-          <ul>
-            { talksByDay.wednesday.map(t => (
-              <li>
-                {`${t.startTime.hour}:${t.startTime.minutes} - ${t.endTime.hour}:${t.endTime.minutes}: ${t.title}`}
-              </li>
-            )) }
-          </ul>
-        </div>
-      );
-
-      const thursdayElement = (
-        <div>
-          <h2>Thursday</h2>
-          <ul>
-            { talksByDay.thursday.map(t => (
-              <li>
-                {`${t.startTime.hour}:${t.startTime.minutes} - ${t.endTime.hour}:${t.endTime.minutes}: ${t.title}`}
-              </li>
-            )) }
-          </ul>
-        </div>
-      );
-
-      const fridayElement = (
-        <div>
-          <h2>Friday</h2>
-          <ul>
-            { talksByDay.friday.map(t => (
-              <li>
-                {`${t.startTime.hour}:${t.startTime.minutes} - ${t.endTime.hour}:${t.endTime.minutes}: ${t.title}`}
-              </li>
-            )) }
-          </ul>
-        </div>
-      );
-
       return (
         <div class="App-intro">
-          {wednesdayElement}
-          {thursdayElement}
-          {fridayElement}
+          <AgendaDay talks={talksByDay.wednesday} dayLabel="Wednesday" />
+          <AgendaDay talks={talksByDay.thursday} dayLabel="Thursday" />
+          <AgendaDay talks={talksByDay.friday} dayLabel="Friday" />
         </div>
       );
     }
