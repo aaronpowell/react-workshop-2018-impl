@@ -1,9 +1,13 @@
 import React from 'react';
+import { H2 } from 'glamorous';
 
 class TabHeader extends React.Component {
     render() {
         return (
-            <h2>{this.props.label}</h2>
+            <H2
+                display="inline-block"
+                width="300px"
+            >{this.props.label}</H2>
         )
     }
 }

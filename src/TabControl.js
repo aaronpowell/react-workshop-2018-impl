@@ -10,7 +10,7 @@ class TabControl extends React.Component {
 
         return (
             <div className="tab-control">
-                <div className="header">
+                <div>
                     <TabHeader label="Wednesday" />
                     <TabHeader label="Thursday" />
                     <TabHeader label="Friday" />
