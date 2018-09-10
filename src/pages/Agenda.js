@@ -17,7 +17,7 @@ class Agenda extends React.Component {
           loading: false,
           talks
         });
-      }
+    }
 
     render() {
         if (this.state.loading) {
@@ -33,7 +33,8 @@ class Agenda extends React.Component {
             { header: 'Wednesday', talks: wednesday },
             { header: 'Thursday', talks: thursday },
             { header: 'Friday', talks: friday }
-          ]}>
+          ]}
+          day={this.props.match.params.day || ''}>
             {tab => (
               <div>
                 <DayAgenda talks={tab.talks} />

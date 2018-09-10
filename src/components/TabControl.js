@@ -9,31 +9,20 @@ class TabControl extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.setState({
-            selectedTab: this.props.tabs[0]
-        });
-    }
-
-    selectTab = tab => {
-        this.setState({
-            selectedTab: tab
-        })
-    }
-
     render() {
+        const selectedTab = this.props.tabs.filter(t => t.header.toLowerCase() === this.props.day.toLowerCase())[0] || this.props.tabs[0];
+
         return (
             <div className="tab-control">
                 <div>
                     {this.props.tabs.map(tab =>
                         <TabHeader
                             key={tab.header}
-                            selected={() => this.selectTab(tab)}
                             label={tab.header}/>
                         )}
                 </div>
                 <div className="body">
-                    {this.props.children(this.state.selectedTab)}
+                    {this.props.children(selectedTab)}
                 </div>
             </div>
         );
