@@ -1,30 +1,39 @@
 import React from 'react';
 import TabHeader from './TabHeader';
-import DayAgenda from './DayAgenda';
 
 class TabControl extends React.Component {
-    render() {
-        const wednesday = this.props.talks.filter(t => t.day === "wednesday");
-        const thursday = this.props.talks.filter(t => t.day === "thursday");
-        const friday = this.props.talks.filter(t => t.day === "friday");
+    constructor() {
+        super();
+        this.state = {
+            selectedTab: { header: '', talks: [] }
+        };
+    }
 
+    componentDidMount() {
+        this.setState({
+            selectedTab: this.props.tabs[0]
+        });
+    }
+
+    selectTab = tab => {
+        this.setState({
+            selectedTab: tab
+        })
+    }
+
+    render() {
         return (
             <div className="tab-control">
                 <div>
-                    <TabHeader label="Wednesday" />
-                    <TabHeader label="Thursday" />
-                    <TabHeader label="Friday" />
+                    {this.props.tabs.map(tab =>
+                        <TabHeader
+                            key={tab.header}
+                            selected={() => this.selectTab(tab)}
+                            label={tab.header}/>
+                        )}
                 </div>
                 <div className="body">
-                    <div className="tab-item wednesday">
-                        <DayAgenda key="wed" talks={wednesday} />
-                    </div>
-                    <div className="tab-item thursday">
-                        <DayAgenda key="thurs" talks={thursday} />
-                    </div>
-                    <div className="tab-item friday">
-                        <DayAgenda key="fri" talks={friday} />
-                    </div>
+                    {this.props.children(this.state.selectedTab)}
                 </div>
             </div>
         );

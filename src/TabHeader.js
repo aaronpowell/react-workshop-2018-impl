@@ -7,6 +7,7 @@ class TabHeader extends React.Component {
             <H2
                 display="inline-block"
                 width="300px"
+                onClick={this.props.selected}
             >{this.props.label}</H2>
         )
     }
