@@ -44,6 +44,15 @@ class App extends Component {
     }
   }
 
+  removeFromSchedule = (talk) => {
+    const index = this.state.schedule.indexOf(talk);
+    if (index !== -1) {
+      this.setState({
+        schedule: this.state.schedule.slice(0, index).concat(this.state.schedule.slice(index + 1, this.state.schedule.length))
+      });
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -71,7 +80,8 @@ class App extends Component {
                           day={props.match.params.day}
                           fetchAgenda={() => this.fetchAgenda()}
                           loaded={this.state.agendaLoaded}
-                          schedule={this.state.schedule} />
+                          schedule={this.state.schedule}
+                          removeFromSchedule={this.removeFromSchedule} />
                       }
             />
         </div>

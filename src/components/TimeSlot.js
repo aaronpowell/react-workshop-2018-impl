@@ -9,7 +9,8 @@ class TimeSlot extends React.Component {
                 {this.props.talks.map(t =>
                     <Talk key={t.title}
                           talk={t}
-                          addToSchedule={this.props.addToSchedule} />)}
+                          addToSchedule={this.props.addToSchedule}
+                          removeFromSchedule={this.props.removeFromSchedule} />)}
             </div>
         );
     }

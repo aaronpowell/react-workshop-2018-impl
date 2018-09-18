@@ -19,7 +19,8 @@ class DayAgenda extends React.Component {
                     <TimeSlot key={ts}
                               timeSlot={ts}
                               talks={timeSlots[ts]}
-                              addToSchedule={this.props.addToSchedule} />)}
+                              addToSchedule={this.props.addToSchedule}
+                              removeFromSchedule={this.props.removeFromSchedule} />)}
             </div>
         );
     }

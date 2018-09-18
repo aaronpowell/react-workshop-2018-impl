@@ -39,6 +39,11 @@ class Talk extends React.Component {
                             <button style={{float: 'right'}} onClick={() => this.props.addToSchedule(talk)}>Add to schedule</button> :
                             null
                     }
+                    {
+                        this.props.removeFromSchedule ?
+                            <button style={{float: 'right'}} onClick={() => this.props.removeFromSchedule(talk)}>Remove from schedule</button> :
+                            null
+                    }
                 </h5>
                 <TalkTitleStyles>
                     <A

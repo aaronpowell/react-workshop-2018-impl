@@ -26,7 +26,8 @@ class ScheduleBuilder extends React.Component {
           day={this.props.day || ''}>
             {tab => (
               <div>
-                <DayAgenda talks={tab.talks} />
+                <DayAgenda talks={tab.talks}
+                           removeFromSchedule={this.props.removeFromSchedule} />
               </div>
             )}
           </TabControl>
