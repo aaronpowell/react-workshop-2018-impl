@@ -1,5 +1,4 @@
 import React from 'react';
-import { fetchAgenda } from '../agenda';
 import TabControl from '../components/TabControl';
 import DayAgenda from '../components/DayAgenda';
 
@@ -7,12 +6,13 @@ class Agenda extends React.Component {
     constructor() {
         super();
         this.state = {
-            loading: true
+            loading: true,
+            talks: []
         };
     }
 
     async componentDidMount() {
-        const talks = await fetchAgenda();
+        const talks = await this.props.fetchAgenda();
         this.setState({
           loading: false,
           talks

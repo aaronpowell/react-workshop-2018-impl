@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Agenda from './pages/Agenda';
 import './App.css';
 import glamorous from 'glamorous';
+import { fetchAgenda } from '../agenda';
 
 const plainLinkStyle = {
   color: '#fff',
@@ -16,6 +17,10 @@ const MenuLinkStyle = glamorous.h3({
   fontSize: '12px',
   margin: '0'
 });
+
+const FetchingAgenda = () => (
+  <Agenda fetchAgenda={fetchAgenda} />
+);
 
 class App extends Component {
   render() {
@@ -31,7 +36,7 @@ class App extends Component {
             </nav>
           </header>
           <Route exact path="/" component={Home} />
-          <Route path="/agenda/:day?" component={Agenda} />
+          <Route path="/agenda/:day?" component={FetchingAgenda} />
         </div>
 
       </Router>
