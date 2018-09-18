@@ -17,6 +17,7 @@ class TabControl extends React.Component {
                 <div>
                     {this.props.tabs.map(tab =>
                         <TabHeader
+                            headerPath={this.props.headerPath}
                             key={tab.header}
                             label={tab.header}/>
                         )}

@@ -65,9 +65,12 @@ class App extends Component {
                             loaded={this.state.agendaLoaded}
                             addToSchedule={this.addToSchedule} />
                     } />
-          <Route path="/schedule-builder"
-                 render={() =>
+          <Route path="/schedule-builder/:day?"
+                 render={(props) =>
                       <ScheduleBuilder
+                          day={props.match.params.day}
+                          fetchAgenda={() => this.fetchAgenda()}
+                          loaded={this.state.agendaLoaded}
                           schedule={this.state.schedule} />
                       }
             />

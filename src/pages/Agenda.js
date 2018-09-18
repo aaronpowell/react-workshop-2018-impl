@@ -22,6 +22,7 @@ class Agenda extends React.Component {
             { header: 'Thursday', talks: thursday },
             { header: 'Friday', talks: friday }
           ]}
+          headerPath="/agenda"
           day={this.props.day || ''}>
             {tab => (
               <div>

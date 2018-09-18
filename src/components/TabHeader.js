@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class TabHeader extends React.Component {
     render() {
         return (
-            <Link to={`/agenda/${this.props.label.toLowerCase()}`}>
+            <Link to={`${this.props.headerPath}/${this.props.label.toLowerCase()}`}>
                 <H2
                     display="inline-block"
                     width="300px"
