@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from './pages/Home';
 import Agenda from './pages/Agenda';
+import ScheduleBuilder from './pages/ScheduleBuilder';
 import './App.css';
 import glamorous from 'glamorous';
-import { fetchAgenda } from '../agenda';
+import { fetchAgenda } from './agenda';
 
 const plainLinkStyle = {
   color: '#fff',
@@ -18,11 +19,31 @@ const MenuLinkStyle = glamorous.h3({
   margin: '0'
 });
 
-const FetchingAgenda = () => (
-  <Agenda fetchAgenda={fetchAgenda} />
-);
-
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      agenda: [],
+      schedule: [],
+      agendaLoaded: false
+    };
+  }
+
+  async fetchAgenda() {
+    if (!this.state.agendaLoaded) {
+      const agenda = await fetchAgenda();
+      this.setState({ agenda, agendaLoaded: true });
+    }
+  }
+
+  addToSchedule = (talk) => {
+    if (this.state.schedule.indexOf(talk) === -1) {
+      this.setState({
+        schedule: [...this.state.schedule, talk]
+      });
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -36,7 +57,20 @@ class App extends Component {
             </nav>
           </header>
           <Route exact path="/" component={Home} />
-          <Route path="/agenda/:day?" component={FetchingAgenda} />
+          <Route path="/agenda/:day?"
+                 render={(props) =>
+                    <Agenda day={props.match.params.day}
+                            fetchAgenda={() => this.fetchAgenda()}
+                            talks={this.state.agenda}
+                            loaded={this.state.agendaLoaded}
+                            addToSchedule={this.addToSchedule} />
+                    } />
+          <Route path="/schedule-builder"
+                 render={() =>
+                      <ScheduleBuilder
+                          schedule={this.state.schedule} />
+                      }
+            />
         </div>
 
       </Router>

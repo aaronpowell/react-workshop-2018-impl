@@ -1,5 +1,6 @@
 import React from 'react';
 import glamorous, { A } from 'glamorous';
+import PropTypes from 'prop-types';
 
 const TalkStyles = glamorous.div({
     display: 'inline-block',
@@ -31,7 +32,14 @@ class Talk extends React.Component {
         let talk = this.props.talk;
         return (
             <TalkStyles>
-                <h5 style={{ margin: 0 }}>{talk.location}</h5>
+                <h5 style={{ margin: 0 }}>
+                    {talk.location}
+                    {
+                        this.props.addToSchedule ?
+                            <button style={{float: 'right'}} onClick={() => this.props.addToSchedule(talk)}>Add to schedule</button> :
+                            null
+                    }
+                </h5>
                 <TalkTitleStyles>
                     <A
                         color="#000"
@@ -45,5 +53,15 @@ class Talk extends React.Component {
         )
     }
 }
+
+Talk.propTypes = {
+    talk: PropTypes.shape({
+        location: PropTypes.string,
+        title: PropTypes.string,
+        speaker: PropTypes.string,
+        link: PropTypes.string,
+    }),
+    addToSchedule: PropTypes.func
+};
 
 export default Talk;

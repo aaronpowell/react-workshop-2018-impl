@@ -15,7 +15,11 @@ class DayAgenda extends React.Component {
 
         return (
             <div>
-                {Object.keys(timeSlots).map(ts => <TimeSlot key={ts} timeSlot={ts} talks={timeSlots[ts]} />)}
+                {Object.keys(timeSlots).map(ts => 
+                    <TimeSlot key={ts}
+                              timeSlot={ts}
+                              talks={timeSlots[ts]}
+                              addToSchedule={this.props.addToSchedule} />)}
             </div>
         );
     }

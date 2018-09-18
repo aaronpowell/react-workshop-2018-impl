@@ -6,7 +6,10 @@ class TimeSlot extends React.Component {
         return (
             <div className="timeSlot">
                 <h3>{this.props.timeSlot}</h3>
-                {this.props.talks.map(t => <Talk key={t.title} talk={t} />)}
+                {this.props.talks.map(t =>
+                    <Talk key={t.title}
+                          talk={t}
+                          addToSchedule={this.props.addToSchedule} />)}
             </div>
         );
     }
