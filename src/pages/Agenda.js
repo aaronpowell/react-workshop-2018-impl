@@ -1,11 +1,15 @@
 import React from 'react';
 import TabControl from '../components/TabControl';
 import DayAgenda from '../components/DayAgenda';
+import { connect } from 'react-redux';
+import { fetchTalks } from '../actions/talks';
 
 class Agenda extends React.Component {
-    async componentDidMount() {
-        await this.props.fetchAgenda();
-    }
+    componentDidMount() {
+      if (!this.props.loaded) {
+        this.props.fetchAgenda();
+      }
+  }
 
     render() {
         if (!this.props.loaded) {
@@ -26,12 +30,20 @@ class Agenda extends React.Component {
           day={this.props.day || ''}>
             {tab => (
               <div>
-                <DayAgenda talks={tab.talks} addToSchedule={this.props.addToSchedule} />
+                <DayAgenda talks={tab.talks} />
               </div>
             )}
           </TabControl>
         );
     }
 }
+const mapStateToProps = (state) => ({
+  talks: state.agenda,
+  loaded: state.loaded
+});
 
-export default Agenda;
+const mapDispatchToProps = (dispatch) => ({
+  fetchAgenda: fetchTalks(dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Agenda);

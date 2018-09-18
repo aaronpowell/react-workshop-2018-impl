@@ -1,10 +1,14 @@
 import React from 'react';
 import TabControl from '../components/TabControl';
 import DayAgenda from '../components/DayAgenda';
+import { connect } from 'react-redux';
+import { fetchTalks } from '../actions/talks';
 
 class ScheduleBuilder extends React.Component {
-    async componentDidMount() {
-        await this.props.fetchAgenda();
+    componentDidMount() {
+        if (!this.props.loaded) {
+          this.props.fetchAgenda();
+        }
     }
 
     render() {
@@ -26,8 +30,7 @@ class ScheduleBuilder extends React.Component {
           day={this.props.day || ''}>
             {tab => (
               <div>
-                <DayAgenda talks={tab.talks}
-                           removeFromSchedule={this.props.removeFromSchedule} />
+                <DayAgenda talks={tab.talks} />
               </div>
             )}
           </TabControl>
@@ -35,4 +38,13 @@ class ScheduleBuilder extends React.Component {
     }
 }
 
-export default ScheduleBuilder;
+const mapStateToProps = (state) => ({
+  schedule: state.schedule,
+  loaded: state.loaded
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchAgenda: fetchTalks(dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleBuilder);

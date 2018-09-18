@@ -5,7 +5,6 @@ import Agenda from './pages/Agenda';
 import ScheduleBuilder from './pages/ScheduleBuilder';
 import './App.css';
 import glamorous from 'glamorous';
-import { fetchAgenda } from './agenda';
 
 const plainLinkStyle = {
   color: '#fff',
@@ -20,39 +19,6 @@ const MenuLinkStyle = glamorous.h3({
 });
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      agenda: [],
-      schedule: [],
-      agendaLoaded: false
-    };
-  }
-
-  async fetchAgenda() {
-    if (!this.state.agendaLoaded) {
-      const agenda = await fetchAgenda();
-      this.setState({ agenda, agendaLoaded: true });
-    }
-  }
-
-  addToSchedule = (talk) => {
-    if (this.state.schedule.indexOf(talk) === -1) {
-      this.setState({
-        schedule: [...this.state.schedule, talk]
-      });
-    }
-  }
-
-  removeFromSchedule = (talk) => {
-    const index = this.state.schedule.indexOf(talk);
-    if (index !== -1) {
-      this.setState({
-        schedule: this.state.schedule.slice(0, index).concat(this.state.schedule.slice(index + 1, this.state.schedule.length))
-      });
-    }
-  }
-
   render() {
     return (
       <Router>
@@ -68,20 +34,12 @@ class App extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/agenda/:day?"
                  render={(props) =>
-                    <Agenda day={props.match.params.day}
-                            fetchAgenda={() => this.fetchAgenda()}
-                            talks={this.state.agenda}
-                            loaded={this.state.agendaLoaded}
-                            addToSchedule={this.addToSchedule} />
+                    <Agenda day={props.match.params.day} />
                     } />
           <Route path="/schedule-builder/:day?"
                  render={(props) =>
                       <ScheduleBuilder
-                          day={props.match.params.day}
-                          fetchAgenda={() => this.fetchAgenda()}
-                          loaded={this.state.agendaLoaded}
-                          schedule={this.state.schedule}
-                          removeFromSchedule={this.removeFromSchedule} />
+                          day={props.match.params.day} />
                       }
             />
         </div>

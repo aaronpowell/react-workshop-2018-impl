@@ -1,6 +1,8 @@
 import React from 'react';
 import glamorous, { A } from 'glamorous';
 import PropTypes from 'prop-types';
+import { addToSchedule, removeFromSchedule } from '../actions/schedule';
+import { connect } from 'react-redux';
 
 const TalkStyles = glamorous.div({
     display: 'inline-block',
@@ -27,37 +29,30 @@ const TagStyles = glamorous.p({
     fontSize: '12px'
 });
 
-class Talk extends React.Component {
-    render() {
-        let talk = this.props.talk;
-        return (
-            <TalkStyles>
-                <h5 style={{ margin: 0 }}>
-                    {talk.location}
-                    {
-                        this.props.addToSchedule ?
-                            <button style={{float: 'right'}} onClick={() => this.props.addToSchedule(talk)}>Add to schedule</button> :
-                            null
-                    }
-                    {
-                        this.props.removeFromSchedule ?
-                            <button style={{float: 'right'}} onClick={() => this.props.removeFromSchedule(talk)}>Remove from schedule</button> :
-                            null
-                    }
-                </h5>
-                <TalkTitleStyles>
-                    <A
-                        color="#000"
-                        textDecoration="none"
-                        href={talk.link}
-                        alt={`${talk.title} by ${talk.speaker}`}
-                    >{talk.title}</A>
-                </TalkTitleStyles>
-                <TagStyles>{talk.speaker}</TagStyles>
-            </TalkStyles>
-        )
-    }
-}
+const Talk = ({ talk, addToSchedule, removeFromSchedule }) => (
+    <TalkStyles>
+        <h5 style={{ margin: 0 }}>
+            {talk.location}
+            <button style={{float: 'right'}}
+                    onClick={() => addToSchedule(talk)}>
+                        Add to schedule
+            </button>
+            <button style={{float: 'right'}}
+                    onClick={() => removeFromSchedule(talk)}>
+                        Remove from schedule
+            </button>
+        </h5>
+        <TalkTitleStyles>
+            <A
+                color="#000"
+                textDecoration="none"
+                href={talk.link}
+                alt={`${talk.title} by ${talk.speaker}`}
+            >{talk.title}</A>
+        </TalkTitleStyles>
+        <TagStyles>{talk.speaker}</TagStyles>
+    </TalkStyles>
+);
 
 Talk.propTypes = {
     talk: PropTypes.shape({
@@ -69,4 +64,10 @@ Talk.propTypes = {
     addToSchedule: PropTypes.func
 };
 
-export default Talk;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch) => ({
+    addToSchedule: (talk) => dispatch(addToSchedule(talk)),
+    removeFromSchedule: talk => dispatch(removeFromSchedule(talk))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Talk);

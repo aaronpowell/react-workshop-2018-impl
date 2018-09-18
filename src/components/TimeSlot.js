@@ -1,19 +1,13 @@
 import React from 'react';
 import Talk from './Talk';
 
-class TimeSlot extends React.Component {
-    render() {
-        return (
-            <div className="timeSlot">
-                <h3>{this.props.timeSlot}</h3>
-                {this.props.talks.map(t =>
-                    <Talk key={t.title}
-                          talk={t}
-                          addToSchedule={this.props.addToSchedule}
-                          removeFromSchedule={this.props.removeFromSchedule} />)}
-            </div>
-        );
-    }
-}
+const TimeSlot = ({ timeSlot, talks }) =>(
+    <div className="timeSlot">
+        <h3>{timeSlot}</h3>
+        {talks.map(t =>
+            <Talk key={t.title}
+                  talk={t} />)}
+    </div>
+);
 
 export default TimeSlot;
